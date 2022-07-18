@@ -1,0 +1,55 @@
+~~~ EXAMPLE SCRIPT OUTLINE ~~~
+
+### set file path
+import os
+os.chdir(r'Z:\MaskMaker')
+
+### import all components needed in project
+from mask import Chip, ChipBorder
+from junction import junction
+
+from bondpad import Bondpad
+from couplers.coupling_tee import CouplingStraight
+from couplers.finger_cap import FingerCap
+from couplers.gap_cap import GapCap
+from cpw.CPWStraight import CPWStraight
+...
+
+### set basic defaults
+defaults = {}
+defaults['pinw'] = pinw_Z0
+...
+defaults['radius'] = 100
+
+### set compound component defaults
+defaults['Bondpad'] = {} # set bondpad defaults
+defaults['Bondpad']['pinw'] = pinw_Z0
+...
+defaults['Bondpad']['bond_pad_length'] = 350
+
+defaults['GapCap'] = {} # set gapcap defaults
+...
+defaults['FingerCap'] = {} # set fingercap defaults
+
+### initialize chip
+chip = mmp.Chip(7000)
+chip.defaults = defaults
+
+### draw
+mmp.ChipBorder(chip,50) # draw chip border
+
+startjunc1 = mmp.junction((1000,1000),0) # set start point
+bondpad1 = mmp.Bondpad(chip, startjunc = startjunc1)
+...
+threewaycap1 = mmp.ThreeWayCoupler(chip)
+...
+bondpad2 = mmp.Bondpad(chip, settings = {'bond_pad_length':700})
+    ## custom settings override defaults
+
+startjunc3 = threewaycap1.cxns['connC']
+    ## connections from other components can be used as jumping-off points
+mmp.CPWStraight(chip,startjunc=startjunc3,settings = {'length':300})
+...
+
+### save drawing to dxf
+chip.drawing.saveas(os.path.join(saveDir,filename))

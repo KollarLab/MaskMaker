@@ -1,0 +1,58 @@
+Notes:
+- These instructions and examples assume the documentation in component.py and example_script_outline has been read
+
+###########################################################################################################################################
+
+~~~ EXAMPLE SCRIPT OUTLINE FOR A COMPONENT ~~~
+
+### usually necessary imports + any others
+from pt_operations import rotate_pt, rotate_pts
+import sdxf
+from junction import junction
+from component import Component
+...
+
+class ComponentName(Component):
+    """
+    
+    << description of component and settings >>
+    
+    """
+    
+    ### set component-level internal defaults
+    _defaults = {}
+    _defaults['key1'] = val1
+    _defaults['key2'] = val2
+    
+    def __init__(self, structure,startjunc=None, settings = {}, cxns_names=['cxn1name','cxn2name']):
+        s=structure
+        
+	### load attributes with Component.__init__
+        comp_key = 'ComponentName'
+        global_keys = ['pinw','gapw']
+        object_keys = ['cxn_pinw','cxn_gapw']
+        Component.__init__(self,structure,comp_key,global_keys,object_keys,settings)
+        settings = self.settings
+        
+        if startjunc is None:
+            startjunc = s.last.copyjunc()
+        else:
+            s.last = startjunc.copyjunc()
+
+        ### create polylines and append to drawing
+        s.drawing.append(sdxf.PolyLine(pts))
+	pts = [(x1,y1),(x2,y2),(x3,y3),(x4,y4)]
+	...
+        
+	### or use existing CPW elements to create component
+	CPWStraight(s,settings = {'length':300,
+				  'pinw':20,
+				  'gapw':8.372
+				  })	
+
+        ### set Chip.last
+	stopjunc = <junction>
+	s.last = stopjunc
+        
+	### set connections
+        self.cxns = {cxns_names[0]:startjunc.reverse(), cxns_names[1]:stopjunc}
