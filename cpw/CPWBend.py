@@ -2,6 +2,7 @@ import sdxf
 from pt_operations import rotate_pt, rotate_pts, translate_pts, arc_pts
 from junction import junction
 from component import Component
+import numpy as np
 
 class CPWBend(Component):
     """A CPW bend"""
@@ -12,11 +13,15 @@ class CPWBend(Component):
     _defaults['gapw'] = 8.372
     _defaults['radius'] = 100
     _defaults['polyarc'] = True
-    _defaults['segments'] = 60
+    _defaults['segments'] = 180
     
     def __init__(self,structure,startjunc=None,settings={},cxns_names=['in','out']):
         """creates a CPW bend with pinw/gapw/radius
-            @param turn_angle: turn_angle is in degrees, positive is CCW, negative is CW
+            
+            turn_angle: turn_angle is in degrees, positive is CCW, negative is CW
+            polyarc: True/False, True draws CPWBend as a polyline, False as arcs and lines
+            segments: number of segments that a full 360 bend would use
+            
         """
         #load default values if necessary
         
@@ -105,12 +110,14 @@ class CPWBend(Component):
     def poly_arc_bend(self):
     
         #lower gap
-        pts1=arc_pts(self.astart_angle,self.astop_angle,self.radius+self.pinw/2.+self.gapw,self.segments)
-        pts1.extend(arc_pts(self.astop_angle,self.astart_angle,self.radius+self.pinw/2.,self.segments))
+        num_segments = np.abs(np.round(self.segments*self.turn_angle/360)).astype(int) #based on what proportion of 360 the subtended angle is
+
+        pts1=arc_pts(self.astart_angle,self.astop_angle,self.radius+self.pinw/2.+self.gapw,num_segments)
+        pts1.extend(arc_pts(self.astop_angle,self.astart_angle,self.radius+self.pinw/2.,num_segments))
         pts1.append(pts1[0])
        
-        pts2=arc_pts(self.astart_angle,self.astop_angle,self.radius-self.pinw/2.,self.segments)
-        pts2.extend(arc_pts(self.astop_angle,self.astart_angle,self.radius-self.pinw/2.-self.gapw,self.segments))
+        pts2=arc_pts(self.astart_angle,self.astop_angle,self.radius-self.pinw/2.,num_segments)
+        pts2.extend(arc_pts(self.astop_angle,self.astart_angle,self.radius-self.pinw/2.-self.gapw,num_segments))
         pts2.append(pts2[0])
       
         self.structure.drawing.append(sdxf.PolyLine(translate_pts(pts1,self.center)))

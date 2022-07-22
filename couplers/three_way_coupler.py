@@ -41,21 +41,13 @@ class ThreeWayCoupler(Component):
         global_keys = ['pinw','gapw']
         object_keys = ['pinw','gapw'] # which correspond to the extract global_keys
         Component.__init__(self,structure,comp_key,global_keys,object_keys,settings)
-        settings = self.settings
-        
-        self.pinw = settings['pinw']
-        self.gapw = settings['gapw']
-        self.cap_edge = settings['cap_edge']
-        self.coupler_radius = settings['coupler_radius']
-        self.coupling_distance = settings['coupling_distance']/2
-        self.length = settings['length']
         
         if startjunc is None:
             startjunc = s.last.copyjunc()
         else:
             s.last = startjunc.copyjunc()
         
-        self.gap_to_center = self.coupling_distance/np.sin(np.pi/3)
+        self.gap_to_center = 0.5*self.coupling_distance/np.sin(np.pi/3)
         self.center = startjunc.add(rotate_pt((self.length+self.gap_to_center,0),startjunc.direction),-180)
 
         self.cxns = {cxns_names[0]:s.last.reverse()}
