@@ -55,16 +55,17 @@ class ThreeWayCoupler(Component):
         else:
             s.last = startjunc.copyjunc()
         
-        self.center = startjunc.add(rotate_pt((self.length+self.coupling_distance,0),startjunc.direction),-180)
+        self.gap_to_center = self.coupling_distance/np.sin(np.pi/3)
+        self.center = startjunc.add(rotate_pt((self.length+self.gap_to_center,0),startjunc.direction),-180)
 
         self.cxns = {cxns_names[0]:s.last.reverse()}
         self.arm()
         
-        s.last = self.center.add(rotate_pt((self.length+self.coupling_distance,0),startjunc.direction+60),60)
+        s.last = self.center.add(rotate_pt((self.length+self.gap_to_center,0),startjunc.direction+60),60)
         self.cxns[cxns_names[1]] = s.last.reverse()
         self.arm()
         
-        s.last = self.center.add(rotate_pt((self.length+self.coupling_distance,0),startjunc.direction-60),-60)
+        s.last = self.center.add(rotate_pt((self.length+self.gap_to_center,0),startjunc.direction-60),-60)
         self.cxns[cxns_names[2]] = s.last.reverse()
         self.arm()
         
@@ -78,12 +79,12 @@ class ThreeWayCoupler(Component):
         cf = np.cos(np.pi/3) #cos factor
         tf = np.tan(np.pi/3) #tan factor
         
-        lengths = [self.length+self.coupling_distance-cf*self.coupler_radius, cf*self.coupler_radius-self.coupling_distance-cf*self.cap_edge, cf*self.cap_edge, self.coupling_distance]
+        lengths = [self.length+self.gap_to_center-cf*self.coupler_radius, cf*self.coupler_radius-self.gap_to_center-cf*self.cap_edge, cf*self.cap_edge, self.gap_to_center]
         
         pinbend_tf = (sf*self.cap_edge-self.pinw/2)/(lengths[0]+lengths[1])        
 
         pinh = [sf*self.cap_edge-pinbend_tf*lengths[1], sf*self.cap_edge, 0, 0]
-        gaph = [sf*self.coupler_radius, sf*self.coupler_radius-tf*lengths[1], tf*self.coupling_distance,0]
+        gaph = [sf*self.coupler_radius, sf*self.coupler_radius-tf*lengths[1], tf*self.gap_to_center,0]
         
         pinws = [self.pinw]
         gapws = [self.gapw]

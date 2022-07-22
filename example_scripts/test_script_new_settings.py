@@ -50,8 +50,6 @@ defaults['radius'] = 100
 chip = Chip(7000)
 chip.defaults = defaults
 
-ChipBorder(chip)
-
 startjunc = startjunction(0)
 bondpad1 = Bondpad(chip,startjunc=startjunc)
 addStraights(chip,bondpad1)
@@ -80,6 +78,21 @@ startjunc = startjunction(6)
 cstraight2 = CouplingStraight(chip,startjunc=startjunc,settings={'coupling_gap':3*gapw_Z0,'updown':'up','leftright':'right'})
 addStraights(chip,cstraight2)
 
+startjunc = startjunction(7)
+cstraight3 = CouplingStraight(chip,startjunc=startjunc,settings={'coupling_gap':5*gapw_Z0,'updown':'up','leftright':'right'})
+addStraights(chip,cstraight3)
+
+startjunc = startjunction(8)
+cstraight4 = CouplingStraight(chip,startjunc=startjunc,settings={'coupling_gap':5*gapw_Z0,'updown':'up','leftright':'left'})
+addStraights(chip,cstraight4)
+
+startjunc = startjunction(9)
+cstraight5 = CouplingStraight(chip,startjunc=startjunc,settings={'coupling_gap':5*gapw_Z0,'updown':'down','leftright':'right'})
+addStraights(chip,cstraight5)
+
+startjunc = startjunction(10)
+cstraight6 = CouplingStraight(chip,startjunc=startjunc,settings={'coupling_gap':5*gapw_Z0,'updown':'down','leftright':'left'})
+addStraights(chip,cstraight6)
 
 #save
 saveDir = r'Z:\Users\Theo\CAD'
