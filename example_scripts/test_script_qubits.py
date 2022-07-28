@@ -23,7 +23,13 @@ chip = Chip(7000)
 straight1 = CPWStraight(chip,settings={'length':600},startjunc=junction((0,0),45))
 QR = ExampleQubit(chip,settings={'refjunc':straight1.cxns['in']})
 QL = ExampleQubit(chip,settings={'refjunc':straight1.cxns['out']})
+"""
+general structure for adding qubits:
 
+ -- name each straight, perhaps prepare in a list?
+ -- add a qubit to each straight ? this seems ugly
+
+"""
 #save
 saveDir = r'C:\Users\Theo\Documents\Kollar Lab Files\CAD'
 filename = 'qubits_test.dxf'
