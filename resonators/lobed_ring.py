@@ -31,7 +31,7 @@ class LobedRing(Component):
     _defaults['resonator_radius'] = 1700
     _defaults['num_arms'] = 6
     
-    def __init__(self,structure, settings = {}, startjunc = None, cxns_names = ['ref']):
+    def __init__(self,structure, settings = {}, startjunc = None, cxns_names = ['couple']):
         
         s = structure
         
@@ -59,15 +59,19 @@ class LobedRing(Component):
             print("impossible geometry!")
             return
         
+        self.qubit_cxns = []
         for arm_index in range(self.num_arms):
-            CPWStraight(s, settings = {'length':length_straights})
-            CPWBend(s, settings = {'turn_angle':-90, 
-                                   'radius':self.outer_bend_radius
-                                   })
             CPWBend(s, settings = {'turn_angle':-90,
                                    'radius':self.outer_bend_radius
                                    })
             CPWStraight(s, settings = {'length':length_straights})
             CPWBend(s, settings = {'turn_angle':180-theta_d,
                                    'radius':self.inner_bend_radius
+                                   })
+            CPWStraight(s, settings = {'length':length_straights})
+            
+            self.qubit_cxns.append(s.last)
+            
+            CPWBend(s, settings = {'turn_angle':-90, 
+                                   'radius':self.outer_bend_radius
                                    })

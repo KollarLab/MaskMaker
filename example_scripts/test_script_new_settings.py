@@ -96,10 +96,10 @@ startjunc = startjunction(10)
 cstraight6 = CouplingStraight(chip,startjunc=startjunc,settings={'coupling_gap':5*gapw_Z0,'updown':'down','leftright':'left'})
 addStraights(chip,cstraight6)
 
-startjunc = startjunction(16)
+startjunc = startjunction(15)
 lobedring1 = LobedRing(chip,startjunc=startjunc)
 
 #save
-saveDir = r'Z:\Users\Theo\CAD'
+saveDir = r'C:\Users\Theo\Documents\Kollar Lab Files\CAD'
 filename = 'MM_settings_test.dxf'
 chip.drawing.saveas(os.path.join(saveDir,filename))
