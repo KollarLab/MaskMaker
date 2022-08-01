@@ -68,6 +68,9 @@ class QubitNotchFromJunc(Component):
                 pts = mirror_pts(pts,direction,coords)
             
             s.drawing.append(sdxf.PolyLine(pts))
+        else:
+            print('Invalid notch_type for QubitNotchFromJunc at {}'.format(coords))
+            return
 
         
         
