@@ -27,7 +27,7 @@ class ThreeWayCoupler(Component):
     _defaults['gapw'] = 8.372
     _defaults['cap_edge'] = 40
     _defaults['coupler_radius'] = 50
-    _defaults['coupling_distance'] = 4
+    _defaults['coupling_distance'] = 6
     _defaults['length'] = 40
     
     def __init__(self,structure, settings = {}, startjunc = None, cxns_names = ['connA', 'connB', 'connC']):
