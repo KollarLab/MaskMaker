@@ -16,14 +16,26 @@ class QubitNotchFromJunc(Component):
     """
     Draws a qubit notch based on a cxn junction
     
-    you pass it a 'in' or 'out' junction of a straight and it draws
+    settings:
+        pinw: pinw of CPW the notch attaches to
+        gapw: gapw of CPW the notch attaches to
+        height: height of notch from base to base
+        taper_angle: inner angle of tapers on both sides of the notch
+        notch_type: currently only takes 'trapezoid'
+        length: full length of the notch, along the CPW
+        leftright: if refjunc.direction is up, draws the notch on the 'left' or
+            'right' side of the CPW
+        refjunc: endpoint of CPW the notch attaches to
+        offset: if refjunc.direction is up, positive offset shifts the notch 
+            down along the CPW
+    
+    essentially, pass it a 'in' or 'out' junction of a straight and it draws
     the notch on that straight
     
     thinking:
         - should it take a startjunc or a CPWStraight as an argument
         - should startjunc be moved to settings for all Components, along with
           cxns_names_defaults? idk it just seems wrong suddenly
-        - 
     
     """
     _defaults = {}
@@ -56,12 +68,13 @@ class QubitNotchFromJunc(Component):
         
         if self.notch_type == 'trapezoid':
             tf = np.tan(np.pi*self.taper_angle/180)
-            pts = [(self.offset+0,d_to_gnd),
-                   (self.offset+self.height/tf,d_to_gnd+self.height),
-                   (self.offset+self.length - self.height/tf,d_to_gnd+self.height),
-                   (self.offset+self.length,d_to_gnd),
+            pts = [(0,d_to_gnd),
+                   (self.height/tf,d_to_gnd+self.height),
+                   (self.length - self.height/tf,d_to_gnd+self.height),
+                   (self.length,d_to_gnd),
                    (0,d_to_gnd)]
             
+            pts = translate_pts(pts,(self.offset,0))
             pts = orient_pts(pts,direction,coords)
             
             if self.leftright == 'left':

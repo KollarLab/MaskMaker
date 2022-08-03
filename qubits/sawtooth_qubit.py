@@ -16,7 +16,41 @@ from qubits.notch import QubitNotchFromJunc
 
 class SawtoothQubit(Component):
     """
+    draws qubit paddles with pocket + teeth
     
+    settings:
+        pinw: pinw of CPW the notch attaches to
+        gapw: gapw of CPW the notch attaches to
+        taper_angle: inner angle of tapers on both sides of the notch
+        notch_type: currently only takes 'trapezoid'
+        leftright: if refjunc.direction is up, draws the notch on the 'left' or
+            'right' side of the CPW
+        refjunc: endpoint of CPW the notch attaches to
+        offset: if refjunc.direction is up, positive offset shifts the notch 
+            down along the CPW
+            
+        h_padding: distance between notch taper and paddle
+        v_padding: distance between notch wall and paddle
+        updown: "points" the paddles either in refjunc.direction ('up') or the 
+            reverse ('down')
+        tooth_height: height of a tooth
+        tooth_spacing: distance between consecutive teeth on opposite paddles.
+            (for example teeth on the same paddle are separated by
+             2*tooth_spacing+tooth_width)
+        tooth_width: width of a tooth
+        
+        paddle_length: length of entire paddle (including pocket)
+        paddle_width: width of paddle NOT INCLUDING tooth_height
+        buffer: length of paddle where there will be no teeth (and a pocket)
+        
+        pocket_offset: distance from edge of pocket to end of paddle
+        pocket_depth: depth of pocket
+        pocket_length: full length of pocket (not just the length of the
+            deepest part of the pocket)
+        pocket_wall_angle: angle the wall makes with the side of the paddle
+            that is "cut out"
+    
+    it is somewhat hard to describe these things, there are pictures in docs
     """
     _defaults = {}
     _defaults['pinw'] = 20
@@ -117,10 +151,10 @@ class SawtoothQubit(Component):
                              (0,2*self.paddle_width+self.paddle_gap)
                              ]
         
-        if self.updown == 'down':
+        if self.updown == 'up':
             paddle1 = mirror_pts(paddle1,90,(self.paddle_length/2,0))
             paddle2 = mirror_pts(paddle2,90,(self.paddle_length/2,0))
-        elif self.updown != 'up':
+        elif self.updown != 'down':
             print('updown should be set to either \'up\' or \'down\', {} was passed instead'.format(self.updown))
         
         self.height = self.pin_gap - (self.gapw + 0.5*self.pinw) + 2*self.paddle_width + self.paddle_gap + self.v_padding
