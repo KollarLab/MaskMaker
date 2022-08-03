@@ -50,7 +50,7 @@ class ThreeWayCoupler(Component):
         if self.coupling_distance < 6:
             print('coupling_distance < 6um may cause fab issues @ {}'.format(startjunc.coords))
         
-        self.gap_to_center = self.coupling_distance/np.sin(np.pi/3)
+        self.gap_to_center = 0.5*self.coupling_distance/np.sin(np.pi/3)
         self.center = startjunc.add(rotate_pt((self.length+self.gap_to_center,0),startjunc.direction),-180)
 
         self.cxns = {cxns_names[0]:s.last.reverse()}
