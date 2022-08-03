@@ -8,7 +8,7 @@ import os
 import numpy as np
 
 # replace with MaskMaker filepath
-os.chdir(r'Z:\MaskMaker') # is this the right way to do this
+# os.chdir(r'C:\Users\Kollarlab\Documents\GitHub\MaskMaker') # is this the right way to do this
 
 from mask import Chip, ChipBorder
 
@@ -22,6 +22,8 @@ from couplers.three_way_coupler import ThreeWayCoupler
 
 from cpw.CPWBend import CPWBend
 from cpw.CPWStraight import CPWStraight
+
+from resonators.lobed_ring import LobedRing
 
 # from DrawCodes.CAD_codes.cpw.CPWLinearTaper import CPWLinearTaper
 
@@ -94,7 +96,10 @@ startjunc = startjunction(10)
 cstraight6 = CouplingStraight(chip,startjunc=startjunc,settings={'coupling_gap':5*gapw_Z0,'updown':'down','leftright':'left'})
 addStraights(chip,cstraight6)
 
+startjunc = startjunction(15)
+lobedring1 = LobedRing(chip,startjunc=startjunc)
+
 #save
-saveDir = r'Z:\Users\Theo\CAD'
+saveDir = r'C:\Users\Theo\Documents\Kollar Lab Files\CAD'
 filename = 'MM_settings_test.dxf'
 chip.drawing.saveas(os.path.join(saveDir,filename))
