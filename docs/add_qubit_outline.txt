@@ -1,0 +1,33 @@
+Notes:
+ -- qubits take a reference junction and sort of draw the qubit to the side of the junction (see ComponentDocs)
+ -- qubits are Components too, and have defaults in the same way the other Components do
+
+~~~ EXAMPLE OUTLINE FOR ADDING QUBITS ~~~
+
+### import necessary qubits
+
+from qubits.sawtooth_qubit import SawtoothQubit
+
+### initalize normally
+chip = Chip(size)
+
+### draw a straight and store it
+qubit_straight = CPWStraight(chip,straight_settings)
+
+### draw a qubit on one of the junctions of the straight
+Q = SawtoothQubit(chip,settings={'refjunc':qubit_straight.cxns['in']})
+
+~~~ ALTERNATIVELY ~~~
+
+### initialize a list of straights that need qubits
+qubit_straights = []
+
+### add straights to this list
+qubit_straights.append(CPWStraight(chip,straight_settings))
+
+### iterate over all these straights and add qubits
+Qs = []
+for straight in qubit_straights:
+    Qs.append(SawtoothQubit(chip,settings={'refjunc':straight.cxns['in']}))
+
+~~~ VOILÀ ~~~
