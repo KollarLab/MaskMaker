@@ -101,6 +101,9 @@ class SawtoothQubit(Component):
         
         tf = np.tan(np.pi*self.taper_angle/180)
 
+        # unit is two lines that comprise one section of the middle of th
+        # paddle. unit[0] contains the lower tooth, unit[1] contains the upper
+        # tooth
         len_unit = 2*(self.tooth_width + self.tooth_spacing)
         unit = [[(0,self.paddle_width),
                  (self.tooth_width+self.tooth_spacing,self.paddle_width),
@@ -115,23 +118,29 @@ class SawtoothQubit(Component):
                  ]
                 ]
         
+        # pocket ends up containing two lines that define the lower (0) and
+        # upper (1) pockets
         pocket = [[(0,self.paddle_width),
                    (self.pocket_depth/np.tan(self.pocket_wall_angle*np.pi/180),self.paddle_width-self.pocket_depth),
                    (self.pocket_length-self.pocket_depth/np.tan(self.pocket_wall_angle*np.pi/180),self.paddle_width-self.pocket_depth),
                    (self.pocket_length,self.paddle_width)
-                   ]]
+                   ]] # lower pocket
         
-        pocket.append(mirror_pts(pocket[0],0,(0,self.paddle_width + 0.5*self.paddle_gap)))
+        pocket.append(mirror_pts(pocket[0],0,(0,self.paddle_width + 0.5*self.paddle_gap))) # upper pocket
         
-        num_units = np.floor((self.paddle_length - self.buffer)/len_unit).astype(int)
+        num_units = np.floor((self.paddle_length - self.buffer)/len_unit).astype(int) # calculate number of units in the paddle_length - buffer
         
+        # starting points for lower and upper paddles
         paddle1 = [(0,0)]
         paddle2 = [(0,2*self.paddle_width+self.paddle_gap)]
         
+        # add all of the tooth units
         for n in range(num_units):
             paddle1 = paddle1 + translate_pts(unit[0],(n*len_unit,0))
             paddle2 = paddle2 + translate_pts(unit[1],(n*len_unit,0))
         
+        # add some extra teeth depending on how much length is left over before
+        # buffer
         rem = (self.paddle_length - self.buffer) % num_units
         if rem >= 2*self.tooth_width+self.tooth_spacing:
             paddle1 = paddle1 + translate_pts(unit[0],(num_units*len_unit,0))
@@ -139,9 +148,11 @@ class SawtoothQubit(Component):
         elif rem >= self.tooth_width:
             paddle2 = paddle2 + translate_pts(unit[1],(num_units*len_unit,0))
         
+        # add pockets
         paddle1 = paddle1 + translate_pts(pocket[0],(self.paddle_length-self.pocket_offset-self.pocket_length,0))
         paddle2 = paddle2 + translate_pts(pocket[1],(self.paddle_length-self.pocket_offset-self.pocket_length,0))
         
+        # wrap back around
         paddle1 = paddle1 + [(self.paddle_length,self.paddle_width),
                              (self.paddle_length,0),
                              (0,0)
@@ -151,6 +162,7 @@ class SawtoothQubit(Component):
                              (0,2*self.paddle_width+self.paddle_gap)
                              ]
         
+        # flip paddles correctly
         if self.updown == 'up':
             paddle1 = mirror_pts(paddle1,90,(self.paddle_length/2,0))
             paddle2 = mirror_pts(paddle2,90,(self.paddle_length/2,0))
@@ -160,12 +172,14 @@ class SawtoothQubit(Component):
         self.height = self.pin_gap - (self.gapw + 0.5*self.pinw) + 2*self.paddle_width + self.paddle_gap + self.v_padding
         self.length = self.paddle_length + 2*self.height/tf + 2*self.h_padding
         
+        # move paddles to their actual location and orientation
         coords_p1 = orient_pt((self.offset+self.h_padding+self.height/tf,self.pin_gap + self.pinw/2),direction,coords)
         paddle1 = orient_pts(paddle1,direction,coords_p1)
         
         coords_p2 = orient_pt((self.offset+self.h_padding+self.height/tf,self.pin_gap + self.pinw/2),direction,coords)
         paddle2 = orient_pts(paddle2,direction,coords_p2)
         
+        # flip them to the other side if necessary
         if self.leftright == 'left':
             paddle1 = mirror_pts(paddle1,direction,coords)
             paddle2 = mirror_pts(paddle2,direction,coords)

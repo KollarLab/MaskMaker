@@ -17,6 +17,25 @@ from qubits.notch import QubitNotchFromJunc
 class ExampleQubit(Component):
     """
     
+    Example qubit mainly for development purposes. Paddles are rounded
+    rectangles.
+    
+    settings:
+        pinw: pinw of CPW the notch attaches to
+        gapw: gapw of CPW the notch attaches to
+        taper_angle: inner angle of tapers on both sides of the notch
+        notch_type: currently only takes 'trapezoid'
+        leftright: if refjunc.direction is up, draws the notch on the 'left' or
+            'right' side of the CPW
+        refjunc: endpoint of CPW the notch attaches to
+        offset: if refjunc.direction is up, positive offset shifts the notch 
+            down along the CPW
+        paddle_length: full length of paddle (including paddle "caps")
+        paddle_width: width of paddle (diameter of paddle "caps")
+        paddle_gap: distance between paddles
+        h_padding: distance between notch taper and paddle
+        v_padding: distance between notch wall and paddle
+    
     """
     _defaults = {}
     _defaults['pinw'] = 20
@@ -46,6 +65,7 @@ class ExampleQubit(Component):
         
         radius = self.paddle_width/2
         
+        # define paddle shape
         pts1 = translate_pts(arc_pts(270,90,radius,90),(radius,radius)) 
         pts2 = [(radius,2*radius),(self.paddle_length-radius,2*radius)]
         pts3 = translate_pts(arc_pts(90,-90,radius,90),(self.paddle_length-radius,radius))
@@ -57,15 +77,19 @@ class ExampleQubit(Component):
         self.height = self.pin_gap - (self.gapw + 0.5*self.pinw) + 2*self.paddle_width + self.paddle_gap + self.v_padding
         self.length = self.paddle_length + 2*self.height/tf + 2*self.h_padding
         
+        # translate paddle shape to correct locations
         coords_p1 = orient_pt((self.offset+self.h_padding+self.height/tf,self.pin_gap + self.pinw/2),direction,coords)
         paddle1 = orient_pts(paddle_pts,direction,coords_p1)
         
         coords_p2 = orient_pt((self.offset+self.h_padding+self.height/tf,self.pin_gap + self.pinw/2 + self.paddle_width + self.paddle_gap),direction,coords)
         paddle2 = orient_pts(paddle_pts,direction,coords_p2)
         
+        # decide which side the qubit goes on
         if self.leftright == 'left':
             paddle1 = mirror_pts(paddle1,direction,coords)
             paddle2 = mirror_pts(paddle2,direction,coords)
+        elif self.leftright != 'right':
+            print('invalid option passed for leftright, default value \'right\' used')
         
         s.drawing.append(sdxf.PolyLine(paddle1))
         s.drawing.append(sdxf.PolyLine(paddle2))

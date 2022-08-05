@@ -7,8 +7,6 @@ Created on Tue Jul 26 18:01:38 2022
 import os
 import numpy as np
 
-# os.chdir(r'C:\Users\Theo\Documents\GitHub\MaskMaker')
-
 from mask import Chip, ChipBorder
 
 from junction import junction
@@ -17,8 +15,6 @@ from cpw.CPWStraight import CPWStraight
 from qubits.example_qubit import ExampleQubit
 from qubits.sawtooth_qubit import SawtoothQubit
 from qubits.notch import QubitNotchFromJunc
-
-# from DrawCodes.CAD_codes.cpw.CPWLinearTaper import CPWLinearTaper
 
 chip = Chip(7000)
 
@@ -35,6 +31,6 @@ QR = SawtoothQubit(chip,settings={'refjunc':straight3.cxns['in'],'offset':20})
 QL = SawtoothQubit(chip,settings={'refjunc':straight3.cxns['out'],'offset':20})
 
 #save
-saveDir = r'Z:\Users\Theo\CAD'
+# saveDir = r'Z:\Users\Theo\CAD'
 filename = 'qubits_test.dxf'
 chip.drawing.saveas(os.path.join(saveDir,filename))

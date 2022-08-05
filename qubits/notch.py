@@ -82,7 +82,8 @@ class QubitNotchFromJunc(Component):
             
             s.drawing.append(sdxf.PolyLine(pts))
         else:
-            print('Invalid notch_type for QubitNotchFromJunc at {}'.format(coords))
+            valid_notch_types = ['trapezoid']
+            print('Invalid notch_type for QubitNotchFromJunc at {}. Supported notch_types are {}'.format(coords,valid_notch_types))
             return
 
         
