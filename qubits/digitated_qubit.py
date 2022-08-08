@@ -14,7 +14,7 @@ from component import Component
 
 from qubits.notch import QubitNotchFromJunc
 
-class SawtoothQubit(Component):
+class DigitatedQubit(Component):
     """
     draws qubit paddles with pocket + teeth
     
@@ -82,7 +82,7 @@ class SawtoothQubit(Component):
         
         s = structure
         
-        comp_key = 'ExampleQubit'
+        comp_key = 'DigitatedQubit'
         global_keys = ['pinw','gapw','pin_gap']
         object_keys = ['pinw','gapw','gapw'], # which correspond to the extract global_keys
         Component.__init__(self,structure,comp_key,global_keys,object_keys,settings)
