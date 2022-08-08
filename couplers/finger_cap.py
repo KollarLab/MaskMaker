@@ -24,8 +24,8 @@ class FingerCap(Component):
     _defaults = {}
     _defaults['num_fingers'] = 6
     _defaults['finger_length'] = 45
-    _defaults['finger_width'] = 5
-    _defaults['finger_gap'] = 5
+    _defaults['finger_width'] = 6
+    _defaults['finger_gap'] = 6
     _defaults['cap_gapw'] = None
     _defaults['taper_length'] = 40    
     _defaults['cxn_pinw'] = 20
@@ -41,9 +41,7 @@ class FingerCap(Component):
         Component.__init__(self,structure,comp_key,global_keys,object_keys,settings)
         
        #number of fingers
-        if self.num_fingers<2:
-            raise MaskError("CPWFingerCap must have at least 2 fingers!")
-
+        
         self.pinw = self.num_fingers*self.finger_width+ (self.num_fingers-1)*self.finger_gap    #effective center pin width sum of finger gaps and widths
         self.length=self.finger_length+self.finger_gap
         self.total_length=self.finger_length+self.finger_gap+2.*self.taper_length
@@ -56,6 +54,13 @@ class FingerCap(Component):
             startjunc = s.last.copyjunc()
         else:
             s.last = startjunc.copyjunc()
+        
+        if self.num_fingers<2:
+            raise MaskError("CPWFingerCap must have at least 2 fingers!")
+        if self.finger_width < 6:
+            print("finger_width < 6um may cause fab issues @ {}".format(startjunc.coords))
+        if self.finger_width < 6:
+            print("finger_gap < 6um may cause fab issues @ {}".format(startjunc.coords))
         
         self.cxns = {cxns_names[0]:startjunc.reverse()}
         

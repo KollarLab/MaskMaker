@@ -27,7 +27,7 @@ class ThreeWayCoupler(Component):
     _defaults['gapw'] = 8.372
     _defaults['cap_edge'] = 40
     _defaults['coupler_radius'] = 50
-    _defaults['coupling_distance'] = 4
+    _defaults['coupling_distance'] = 6
     _defaults['length'] = 40
     
     def __init__(self,structure, settings = {}, startjunc = None, cxns_names = ['connA', 'connB', 'connC']):
@@ -46,6 +46,9 @@ class ThreeWayCoupler(Component):
             startjunc = s.last.copyjunc()
         else:
             s.last = startjunc.copyjunc()
+        
+        if self.coupling_distance < 6:
+            print('coupling_distance < 6um may cause fab issues @ {}'.format(startjunc.coords))
         
         self.gap_to_center = 0.5*self.coupling_distance/np.sin(np.pi/3)
         self.center = startjunc.add(rotate_pt((self.length+self.gap_to_center,0),startjunc.direction),-180)
