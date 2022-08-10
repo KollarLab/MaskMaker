@@ -42,7 +42,7 @@ attributes:
     saveas(file): more convenient call to save drawing as dxf
 """
 class Chip:
-    def __init__(self, size, start=junction((1000,1000),0)):
+    def __init__(self, size, start=junction((0,0),0)):
         self.last = start
         self.size = size
         self.defaults = {}
