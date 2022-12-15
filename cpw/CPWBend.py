@@ -29,8 +29,8 @@ class CPWBend(Component):
 #        print('radius',radius)
 
         comp_key = 'CPWBend'
-        global_keys = ['pinw','gapw']
-        object_keys = ['pinw','gapw'] # which correspond to the extract global_keys
+        global_keys = ['pinw','gapw','radius']
+        object_keys = ['pinw','gapw','radius'] # which correspond to the extract global_keys
         Component.__init__(self,structure,comp_key,global_keys,object_keys,settings)
         settings = self.settings
         
