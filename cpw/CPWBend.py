@@ -35,10 +35,12 @@ class CPWBend(Component):
         settings = self.settings
         
         self.structure=structure
-
-        if self.turn_angle==0: return
-        
+      
         if startjunc is None: startjunc = s.last.copyjunc()
+        
+        if self.turn_angle==0:
+            s.last = startjunc.copyjunc()
+            return
 
         self.start=startjunc.coords
         self.start_angle=startjunc.direction
