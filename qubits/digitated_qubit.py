@@ -28,7 +28,8 @@ class DigitatedQubit(Component):
         refjunc: endpoint of CPW the notch attaches to
         offset: if refjunc.direction is up, positive offset shifts the notch 
             down along the CPW
-            
+        
+        pin_gap: distance between CPW pin and closest paddle
         h_padding: distance between notch taper and paddle
         v_padding: distance between notch wall and paddle
         updown: "points" the paddles either in refjunc.direction ('up') or the 
