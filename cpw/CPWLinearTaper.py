@@ -23,9 +23,11 @@ class CPWLinearTaper(Component):
         Component.__init__(self,structure,comp_key,global_keys,object_keys,settings)
         settings = self.settings
         
-        if self.length==0: return
-        
         if startjunc is None: startjunc=s.last.copyjunc()
+        
+        if length==0:
+                s.last = startjunc.copyjunc()
+                return
         
         coords = startjunc.coords
         #define geometry of gaps

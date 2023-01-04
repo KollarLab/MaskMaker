@@ -26,11 +26,13 @@ class CPWStraight(Component):
         length = settings['length']
         pinw = settings['pinw']
         gapw = settings['gapw']
-        
-        if length==0: return
-        
+                
         if startjunc is None: startjunc=s.last.copyjunc()
-            
+        
+        if length==0:
+                s.last = startjunc.copyjunc()
+                return
+
         coords = startjunc.coords
         
         gap1=[  (coords[0],coords[1]+pinw/2),
