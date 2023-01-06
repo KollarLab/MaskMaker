@@ -25,7 +25,7 @@ class CPWLinearTaper(Component):
         
         if startjunc is None: startjunc=s.last.copyjunc()
         
-        if length==0:
+        if self.length==0:
                 s.last = startjunc.copyjunc()
                 return
         
