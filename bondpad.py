@@ -30,9 +30,9 @@ class Bondpad(Component):
     _defaults['pinw'] = 20
     _defaults['gapw'] = 8.372
     _defaults['launcher_pinw'] = 400
-    _defaults['launcher_gapw'] = 160
+    _defaults['launcher_gapw'] = 167.44
     _defaults['taper_length'] = 300
-    _defaults['launcher_padding'] = 160
+    _defaults['launcher_padding'] = 167.44
     _defaults['bond_pad_length'] = 350
 
     def __init__(self, structure, settings = {}, startjunc = None, cxns_names = ['out']):
