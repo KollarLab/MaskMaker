@@ -6,15 +6,7 @@ class Bondpad(Component):
     """
     
     creates a bondpad
-    
-    IMPORTANT:
-        if startjunc is specified, the bondpad is a starting bondpad, and is
-            drawn in the direction of startjunc with the connection at
-            startjunc (the rest of the bondpad is drawn 'behind' startjunc)
-        if startjunc is not specified, the bondpad is an ending bondpad, and is
-            drawn in the opposite direction, with the connection at startjunc
-            (the two connections end up being in opposite directions) 
-    
+        
     settings:
         pinw: pinw of connection
         gapw: gapw of connection
@@ -24,7 +16,21 @@ class Bondpad(Component):
             launcher_pinw/launcher_gapw
         launcher_padding: gap on end of bondpad opposite connection
         bond_pad_length: length of fattest part of bondpad
-    
+        spec: see note below
+        
+        if spec is 'auto', 
+            if startjunc is specified,
+                the bondpad is a starting bondpad, and is drawn in the direction of 
+                startjunc with the connection at startjunc (the rest of the bondpad 
+                is drawn 'behind' startjunc)
+            if startjunc is not specified
+                the bondpad is an ending bondpad, and is drawn in the opposite 
+                direction, with the connection at startjunc (the startjunc and the 
+                connection end up being in opposite directions) 
+        if spec is 'start'
+            the bondpad is a starting bondpad
+        if spec is 'end'
+            the bondpad is an ending bondpad
     """
     _defaults = {}
     _defaults['pinw'] = 20
@@ -34,6 +40,7 @@ class Bondpad(Component):
     _defaults['taper_length'] = 300
     _defaults['launcher_padding'] = 167.44
     _defaults['bond_pad_length'] = 350
+    _defaults['spec'] = 'auto'
 
     def __init__(self, structure, settings = {}, startjunc = None, cxns_names = ['out']):
         comp_key = 'Bondpad'
@@ -42,12 +49,16 @@ class Bondpad(Component):
         Component.__init__(self,structure,comp_key,global_keys,object_keys,settings)
         
         s = structure
-
-        if startjunc is None: # end
-            startjunc = s.last.reverse()
-
-        else: # start
+        
+        if self.spec == 'start':
             s.last = startjunc.reverse()
+        elif self.spec == 'end':
+            startjunc = s.last.reverse()
+        else:
+            if startjunc is None: # end
+                startjunc = s.last.reverse()
+            else: # start
+                s.last = startjunc.reverse()
         
         CPWLinearTaper(s, settings = {'length':self.taper_length,
                                       'start_pinw':self.pinw,
