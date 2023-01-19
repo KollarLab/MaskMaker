@@ -5,7 +5,14 @@ from component import Component
 import numpy as np
 
 class CPWBend(Component):
-    """A CPW bend"""
+    """
+    creates a CPW bend with pinw/gapw/radius
+            
+    turn_angle: turn_angle is in degrees, positive is CCW, negative is CW
+    polyarc: True/False, True draws CPWBend as a polyline, False as arcs and lines
+    segments: number of segments that a full 360 bend would use
+            
+    """
     
     _defaults = {}
     _defaults['turn_angle'] = 90
@@ -16,13 +23,6 @@ class CPWBend(Component):
     _defaults['segments'] = 180
     
     def __init__(self,structure,startjunc=None,settings={},cxns_names=['in','out']):
-        """creates a CPW bend with pinw/gapw/radius
-            
-            turn_angle: turn_angle is in degrees, positive is CCW, negative is CW
-            polyarc: True/False, True draws CPWBend as a polyline, False as arcs and lines
-            segments: number of segments that a full 360 bend would use
-            
-        """
         #load default values if necessary
         
         s=structure

@@ -31,6 +31,8 @@ defaults['pinw'] = pinw_Z0
 defaults['gapw'] = gapw_Z0
 defaults['radius'] = 100
 
+defaults['FingerCap']['finger_length'] = 200
+
 chip = Chip(7000)
 chip.defaults = defaults
 

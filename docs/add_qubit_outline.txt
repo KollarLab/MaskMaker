@@ -30,4 +30,17 @@ Qs = []
 for straight in qubit_straights:
     Qs.append(SawtoothQubit(chip,settings={'refjunc':straight.cxns['in']}))
 
+~~~ OR AS A FINAL ALTERNATIVE ~~~
+
+### initialize a list of refjuncs that need qubits
+qubit_junctions = []
+
+### add junctions to this list
+qubit_junctions.append(straight.cxns['in'])
+
+### iterate over all these junctions and add qubits
+Qs = []
+for junc in qubit_junctions:
+    Qs.append(SawtoothQubit(chip,settings={'refjunc':junc}))
+
 ~~~ VOILÀ ~~~
