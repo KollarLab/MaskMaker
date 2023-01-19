@@ -23,7 +23,6 @@ class junction():
         
     """
     def __init__(self,coords,direction):
-        # I cannot figure out a better way to do this, but I'm sure there is one
         if type(coords) == tuple and (type(direction) == float or type(direction) == int):
             if len(coords) == 2:
                 if (np.isscalar(coords[0]) == True) and (np.isscalar(coords[1]) == True):
@@ -38,6 +37,8 @@ class junction():
         else:
             raise TypeError("junction coordinates not a tuple or junction direction not a number")
             return
+    def __str__(self):
+        return f'junction at {self.coords} facing {self.direction} degrees'
     def copyjunc(self):
         return junction(self.coords,self.direction)
     def add(self,coords,direction):

@@ -33,6 +33,10 @@ class MaskError:
 Made with our current process in mind, where we design a chip and copy-paste it
 onto a mask template.
 
+arguments:
+    size: length of a side of the square chip
+    start: junction that will be the initial position for the design
+
 attributes:
     last: current position and direction, is a junction
     size: length of a side of the square chip

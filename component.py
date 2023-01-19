@@ -28,8 +28,7 @@ class Component:
             cxns: dictionary of connection points to object
     
     There are four levels of defaults, as seen in the line where
-    self.settings is assigned. In order of precedence, where the Bondpad
-    class is used as an example:
+    self.settings is assigned. In order of precedence:
         (1) settings passed in a dictionary as an argument of
             Component.__init__
         (2) mask level defaults for the component set in a dictionary at 

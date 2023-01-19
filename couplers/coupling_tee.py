@@ -41,7 +41,7 @@ class CouplingStraight(Component):
     _defaults['length'] = 200
     _defaults['coupling_straight'] = 50
     _defaults['coupling_gap'] = 8.372
-    _defaults['buffer'] = 10
+    _defaults['buffer'] = 40
     _defaults['leftright'] = 'right'
     _defaults['updown'] = 'down'
     _defaults['add_hanger'] = True
