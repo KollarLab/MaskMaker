@@ -41,19 +41,19 @@ class ComponentName(Component):
             s.last = startjunc.copyjunc()
 
         ### create polylines and append to drawing
-		pts = [(x1,y1),(x2,y2),(x3,y3),(x4,y4)]
-		s.drawing.append(sdxf.PolyLine(pts))
-		...
-			
-		### or use existing CPW elements to create component
-		CPWStraight(s,settings = {'length':300,
-					  'pinw':20,
-					  'gapw':8.372
-					  })	
+	pts = [(x1,y1),(x2,y2),(x3,y3),(x4,y4)]
+	s.drawing.append(sdxf.PolyLine(pts))
+	...
+		
+	### or use existing CPW elements to create component
+	CPWStraight(s,settings = {'length':300,
+				  'pinw':20,
+				  'gapw':8.372
+				  })	
 
-		### set Chip.last
-		stopjunc = <junction>
-		s.last = stopjunc
+	### set Chip.last
+	stopjunc = <junction>
+	s.last = stopjunc
 			
-		### set connections
+	### set connections
         self.cxns = {cxns_names[0]:startjunc.reverse(), cxns_names[1]:stopjunc}
