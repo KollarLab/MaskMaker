@@ -16,9 +16,9 @@ class Bondpad(Component):
             launcher_pinw/launcher_gapw
         launcher_padding: gap on end of bondpad opposite connection
         bond_pad_length: length of fattest part of bondpad
-        spec: see note below
+        type: see note below
         
-        if spec is 'auto', 
+        if type is 'auto', 
             if startjunc is specified,
                 the bondpad is a starting bondpad, and is drawn in the direction of 
                 startjunc with the connection at startjunc (the rest of the bondpad 
@@ -27,9 +27,9 @@ class Bondpad(Component):
                 the bondpad is an ending bondpad, and is drawn in the opposite 
                 direction, with the connection at startjunc (the startjunc and the 
                 connection end up being in opposite directions) 
-        if spec is 'start'
+        if type is 'start'
             the bondpad is a starting bondpad
-        if spec is 'end'
+        if type is 'end'
             the bondpad is an ending bondpad
     """
     _defaults = {}
@@ -40,7 +40,7 @@ class Bondpad(Component):
     _defaults['taper_length'] = 300
     _defaults['launcher_padding'] = 167.44
     _defaults['bond_pad_length'] = 350
-    _defaults['spec'] = 'auto'
+    _defaults['type'] = 'auto'
 
     def __init__(self, structure, settings = {}, startjunc = None, cxns_names = ['out']):
         comp_key = 'Bondpad'
@@ -50,9 +50,9 @@ class Bondpad(Component):
         
         s = structure
         
-        if self.spec == 'start':
+        if self.type == 'start':
             s.last = startjunc.reverse()
-        elif self.spec == 'end':
+        elif self.type == 'end':
             startjunc = s.last.reverse()
         else:
             if startjunc is None: # end
