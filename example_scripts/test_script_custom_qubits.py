@@ -17,8 +17,8 @@ chip = Chip(7000)
 
 straight1 = CPWStraight(chip,settings={'length':2000},startjunc=junction((0,-500),0))
 
-# dxf_path = r'Z:\Users\Theo\CAD\martins_stolen_qubit.dxf'
-dxf_path = r'Z:\Users\Theo\CAD\rounded_qubit.dxf'
+martin_path = r'Z:\Users\Theo\CAD\martins_stolen_qubit.dxf'
+round_path = r'Z:\Users\Theo\CAD\rounded_qubit.dxf'
 
 qubit_h = 52
 qubit_l = 548
@@ -30,7 +30,7 @@ qubit_settings['leftright'] = 'right'
 qubit_settings['notch_offset'] = 20
 qubit_settings['import_offset'] = (qubit_settings['length']-qubit_l)/2
 
-qubit_settings['qubit_path'] = dxf_path
+qubit_settings['qubit_path'] = martin_path
 
 
 qubit_settings['refjunc'] = straight1.cxns['in']
@@ -39,9 +39,9 @@ QR = CustomQubit(chip,settings=qubit_settings)
 qubit_settings['refjunc'] = straight1.cxns['out']
 QL = CustomQubit(chip,settings=qubit_settings)
 
-ImportedDXF(chip,settings={'dxf_path':dxf_path,'offset':(100,0)})
-ImportedDXF(chip,settings={'dxf_path':dxf_path,'offset':(-100,0),'xscale':-1})
-ImportedDXF(chip,settings={'dxf_path':dxf_path,'offset':(0,100),'xscale':10,'yscale':10,'rotation':15})
+ImportedDXF(chip,settings={'dxf_path':round_path,'offset':(100,0)})
+ImportedDXF(chip,settings={'dxf_path':round_path,'offset':(-100,0),'xscale':-1})
+ImportedDXF(chip,settings={'dxf_path':round_path,'offset':(0,100),'xscale':10,'yscale':10,'rotation':15})
 
 saveDir = r'Z:\Users\Theo\CAD'
 filename = 'custom_qubits.dxf'

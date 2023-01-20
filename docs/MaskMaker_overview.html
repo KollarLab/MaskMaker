@@ -14591,11 +14591,11 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <ol>
-<li>Introduction</li>
-<li>Overview of Documentation</li>
-<li>Structure</li>
-<li>Use</li>
-<li>Component Design</li>
+<li><a href="#1">Introduction</a></li>
+<li><a href="#2">Overview of Documentation</a></li>
+<li><a href="#3">Structure</a></li>
+<li><a href="#4">Use</a></li>
+<li><a href="#5">Component Design</a></li>
 </ol>
 
 </div>
@@ -14610,6 +14610,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <hr>
 
+<p><a id="1"></a></p>
 <h2 id="1-Introduction"><strong>1</strong> Introduction<a class="anchor-link" href="#1-Introduction">&#182;</a></h2><p><a href="https://github.com/KollarLab/MaskMaker">MaskMaker</a> contains code for drawing our coplanar-waveguide devices, and exports that drawing as a <strong>dxf</strong> file. Most basic components one would want to use for a device (a straight section of coplanar waveguide, a bent section of coplanar waveguide, various couplers) have been written as classes. The user can store and access information about individual components in instances of these classes, allowing for smoother and more flexible design. In addition, MaskMaker standardizes the way components are written in code, to enable more efficient collaboration in future development. All measurements are in <strong>microns</strong>.</p>
 
 </div>
@@ -14624,6 +14625,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <hr>
 
+<p><a id="2"></a></p>
 <h2 id="2-Documentation"><strong>2</strong> Documentation<a class="anchor-link" href="#2-Documentation">&#182;</a></h2><p>Each of MaskMaker's code files contains documentation with a general description of its function that specifies, for example, its <code>__init__</code> arguments or important attributes. This documentation can also usually be accessed using <code>help(object)</code>. In addition, MaskMaker contains a few documentation files and example scripts that complement the documentation in this overview.</p>
 <h3 id="2.1-docs"><strong>2.1</strong> docs<a class="anchor-link" href="#2.1-docs">&#182;</a></h3><h4 id="add_component_outline">add_component_outline<a class="anchor-link" href="#add_component_outline">&#182;</a></h4><p>A .txt file that outlines the standardized parts of a <abbr title="MaskMaker\component">`Component`</abbr> in MaskMaker. Most new components should end up with the attributes in this outline in order to be consistent with already existing components, and to make them easy to use.</p>
 <h4 id="add_qubit_outline">add_qubit_outline<a class="anchor-link" href="#add_qubit_outline">&#182;</a></h4><p>A .txt file that outlines the process for adding a qubit (in their current state of development) to a design.</p>
@@ -14646,6 +14648,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <hr>
 
+<p><a id="3"></a></p>
 <h2 id="3-Structure"><strong>3</strong> Structure<a class="anchor-link" href="#3-Structure">&#182;</a></h2><p>This section is an overview of the main organizational objects in MaskMaker.</p>
 <h3 id="3.1-Chip"><strong>3.1</strong> Chip<a class="anchor-link" href="#3.1-Chip">&#182;</a></h3><p>Each MaskMaker design will begin by initializing a <abbr title="MaskMaker\mask">`Chip`</abbr>, which stores the dxf objects of the drawing, the current position and direction while adding components, and the defaults for the design. As each new <abbr title="MaskMaker\component">`Component`</abbr> is initialized, it will take a <code>Chip</code> as its <code>structure</code> argument and add polylines to <code>Chip.drawing</code>. At the end of the script, <code>Chip</code> can be saved as a dxf. A simple design might look something like this:</p>
 
@@ -14959,6 +14962,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <hr>
 
+<p><a id="4"></a></p>
 <h2 id="4-Use"><strong>4</strong> Use<a class="anchor-link" href="#4-Use">&#182;</a></h2><p>This section contains all of the information needed to configure MaskMaker and use it to design a chip.</p>
 <h3 id="4.1-Configuration"><strong>4.1</strong> Configuration<a class="anchor-link" href="#4.1-Configuration">&#182;</a></h3><p>In order to begin using MaskMaker, GitHub must be downloaded. The repository can be cloned in Git Bash using</p>
 
@@ -15307,6 +15311,9 @@ ChipBorder(chip) # draws a chip border</p>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<hr>
+
+<p><a id="5"></a></p>
 <h2 id="5-New-Component-Design"><strong>5</strong> New Component Design<a class="anchor-link" href="#5-New-Component-Design">&#182;</a></h2><p>Although the previous sections should give a working understanding for using existing components, they does not encapsulate all that one needs to know to design and add components. This section will be a step-by-step walkthrough for writing a <abbr title="MaskMaker\component">`Component`</abbr>, and is essentially a better enunciated version of <abbr title="MaskMaker\docs\">**add_component_outline**</abbr>.</p>
 <p>Each <code>Component</code> is stored within its own file, for the most part. At the top of the file there are a number of imports usually necessary:</p>
 
