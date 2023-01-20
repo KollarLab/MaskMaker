@@ -66,8 +66,10 @@ class CPWBend(Component):
         
         self.cxns = {cxns_names[0]:junction(self.start,self.start_angle),cxns_names[1]:junction(self.stop,self.stop_angle)}
 
-    def arc_bend(self):    
-            
+    def arc_bend(self):
+        print("polyarc = False no longer supported!")
+        self.poly_arc_bend()
+        """  
         #print "start: %d, stop: %d" % (start_angle,stop_angle)
         
         if self.turn_angle>0:
@@ -107,7 +109,7 @@ class CPWBend(Component):
         self.structure.drawing.append(sdxf.Arc(self.center,self.radius-self.pinw/2.,self.astart_angle,self.astop_angle))
         self.structure.drawing.append(sdxf.Arc(self.center,self.radius-self.pinw/2.-self.gapw,self.astart_angle,self.astop_angle))
         self.structure.drawing.append(sdxf.Line(points4))            
-            
+        """    
 
     def poly_arc_bend(self):
     
@@ -122,6 +124,6 @@ class CPWBend(Component):
         pts2.extend(arc_pts(self.astop_angle,self.astart_angle,self.radius-self.pinw/2.-self.gapw,num_segments))
         pts2.append(pts2[0])
       
-        self.structure.drawing.append(sdxf.PolyLine(translate_pts(pts1,self.center)))
-        self.structure.drawing.append(sdxf.PolyLine(translate_pts(pts2,self.center)))
+        self.structure.drawing.add_lwpolyline(translate_pts(pts1,self.center))
+        self.structure.drawing.add_lwpolyline(translate_pts(pts2,self.center))
         

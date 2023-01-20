@@ -70,4 +70,4 @@ CPWStraight(chip,settings={'length':300})
 #save
 # saveDir = r'Z:\Users\Theo\CAD'
 filename = 'mmv1_test.dxf'
-chip.drawing.saveas(os.path.join(saveDir,filename))
+chip.saveas(os.path.join(saveDir,filename))

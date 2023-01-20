@@ -1,6 +1,5 @@
 from component import Component
 from cpw.CPWLinearTaper import CPWLinearTaper
-import sdxf
 from pt_operations import rotate_pts, translate_pts, rotate_pt
 from mask import MaskError
 from junction import junction
@@ -95,8 +94,8 @@ class FingerCap(Component):
         stop=rotate_pt((start[0]+length,start[1]),s.last.direction,start)
         s.last=junction(stop, s.last.direction)
 
-        s.drawing.append(sdxf.PolyLine(gap1))
-        s.drawing.append(sdxf.PolyLine(gap2))
+        s.drawing.add_lwpolyline(gap1)
+        s.drawing.add_lwpolyline(gap2)
 
         #draw finger gaps
         for ii in range(self.num_fingers-1):
@@ -107,7 +106,7 @@ class FingerCap(Component):
             pts=translate_pts(pts,start)
             pts=translate_pts(pts,(0,ii*(self.finger_width+self.finger_gap)-self.pinw/2))
             pts=rotate_pts(pts,s.last.direction,start)
-            s.drawing.append(sdxf.PolyLine(pts))
+            s.drawing.add_lwpolyline(pts)
 
         #draw last little box to separate sides
         pts = [ (0,0),(0,self.finger_width),(self.finger_gap,self.finger_width),(self.finger_gap,0),(0,0)]
@@ -115,7 +114,7 @@ class FingerCap(Component):
         #if odd number of fingers add box on left otherwise on right
         pts=translate_pts(pts,( ((self.num_fingers+1) %2)*(length-self.finger_gap),(self.num_fingers-1)*(self.finger_width+self.finger_gap)-self.pinw/2))
         pts=rotate_pts(pts,s.last.direction,start)
-        s.drawing.append(sdxf.PolyLine(pts))
+        s.drawing.add_lwpolyline(pts)
         
         CPWLinearTaper(structure, settings = {'length': self.taper_length,
                                               'start_pinw': pinw,

@@ -7,7 +7,7 @@ Created on Tue Jul 26 18:01:38 2022
 import os
 import numpy as np
 
-from mask import Chip, ChipBorder
+from mask import Chip
 
 from junction import junction
 
@@ -33,4 +33,4 @@ QL = DigitatedQubit(chip,settings={'refjunc':straight3.cxns['out'],'offset':20})
 #save
 # saveDir = r'Z:\Users\Theo\CAD'
 filename = 'qubits_test.dxf'
-chip.drawing.saveas(os.path.join(saveDir,filename))
+chip.saveas(os.path.join(saveDir,filename))

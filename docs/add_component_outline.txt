@@ -42,7 +42,7 @@ class ComponentName(Component):
 
         ### create polylines and append to drawing
 		pts = [(x1,y1),(x2,y2),(x3,y3),(x4,y4)]
-		s.drawing.append(sdxf.PolyLine(pts))
+		s.drawing.add_lw_polyline(pts)
 		...
 			
 		### or use existing CPW elements to create component
