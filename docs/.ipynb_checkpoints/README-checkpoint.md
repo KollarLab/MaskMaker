@@ -5,6 +5,7 @@ MaskMaker contains code for creating dxf photomasks for our superconducting circ
 Requires:
 - ezdxf
 
+<hr>
 Koll&aacute;r Lab, University of Maryland, College Park
 
 Authors: Theo Gifford and Martin Ritter
