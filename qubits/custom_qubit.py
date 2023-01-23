@@ -7,10 +7,11 @@ Created on Tue Jul 26 18:18:15 2022
 
 import numpy as np
 from component import Component
-from pt_operations import rotate_pt, rotate_pts, translate_pts, arc_pts, orient_pts, mirror_pts, translate_pt, orient_pt
+from pt_operations import rotate_pt, rotate_pts, translate_pts, arc_pts, orient_pts, mirror_pts, translate_pt, orient_pt, mirror_pt
 from junction import junction
 from component import Component
 import ezdxf
+from import_dxf import ImportedDXF
 
 from qubits.notch import QubitNotchFromJunc
 
@@ -76,27 +77,21 @@ class CustomQubit(Component):
         coords = self.refjunc.coords
         direction = self.refjunc.direction + 180
         
-        doc = ezdxf.readfile(self.qubit_path)
-        msp = doc.modelspace()  # contains all drawing entities
-        
-        all_pts = []
-        polylines = msp.query("LWPOLYLINE")  # get all polylines in modelspace
-        for polyline in polylines:
-            pts = polyline.vertices()
-            pts = list(pts)
-            pts.append(pts[0])
-            pts = translate_pts(pts,(self.import_offset+self.notch_offset,self.pin_gap+self.pinw/2))
-            pts = orient_pts(pts,direction,coords)
-            all_pts.append(pts)
-            
+        offset = (0,0)
+        offset = translate_pt(offset,(self.import_offset+self.notch_offset,self.pin_gap+self.pinw/2))
+        offset = orient_pt(offset,direction,coords)
         if self.leftright == 'left':
-            for pts in all_pts:
-                pts = mirror_pts(pts,direction,coords)
-        elif self.leftright != 'right':
-            print('invalid option passed for leftright, default value \'right\' used')
+            yscale = -1
+            offset = mirror_pt(offset,direction,coords)
+        else:
+            yscale = 1
         
-        for pts in all_pts:
-            s.drawing.add_lwpolyline(pts)
+        import_settings = {'dxf_path': self.qubit_path,
+                           'offset': offset,
+                           'rotation': direction,
+                           'yscale': yscale
+                           }
+        ImportedDXF(s,import_settings)
         
         QubitNotchFromJunc(s,settings = {'pinw': self.pinw,
                                          'gapw': self.gapw,
@@ -107,3 +102,27 @@ class CustomQubit(Component):
                                          'refjunc': self.refjunc,
                                          'offset': self.notch_offset,
                                          'notch_type': self.notch_type})
+        
+### Old
+
+# doc = ezdxf.readfile(self.qubit_path)
+# msp = doc.modelspace()  # contains all drawing entities
+
+# all_pts = []
+# polylines = msp.query("LWPOLYLINE")  # get all polylines in modelspace
+# for polyline in polylines:
+#     pts = polyline.vertices()
+#     pts = list(pts)
+#     pts.append(pts[0])
+#     pts = translate_pts(pts,(self.import_offset+self.notch_offset,self.pin_gap+self.pinw/2))
+#     pts = orient_pts(pts,direction,coords)
+#     all_pts.append(pts)
+    
+# if self.leftright == 'left':
+#     for pts in all_pts:
+#         pts = mirror_pts(pts,direction,coords)
+# elif self.leftright != 'right':
+#     print('invalid option passed for leftright, default value \'right\' used')
+
+# for pts in all_pts:
+#     s.drawing.add_lwpolyline(pts)

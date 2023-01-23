@@ -66,5 +66,5 @@ class ImportedDXF(Component):
             'rotation': self.rotation
             })
         
-        for ref in s.drawing.query(f'INSERT[name=={block_name}]'):
+        for ref in s.drawing.query(f'INSERT[name=="{block_name}"]'):
             ref.explode()
