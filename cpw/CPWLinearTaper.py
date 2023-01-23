@@ -52,8 +52,8 @@ class CPWLinearTaper(Component):
         gap2=rotate_pts(gap2,startjunc.direction,coords)
 
         #create polylines and append to drawing
-        s.drawing.append(sdxf.PolyLine(gap1))
-        s.drawing.append(sdxf.PolyLine(gap2))
+        s.drawing.add_lwpolyline(gap1)
+        s.drawing.add_lwpolyline(gap2)
         
         #update last anchor position
         stop_coords=rotate_pt((coords[0]+self.length,coords[1]),startjunc.direction,coords)

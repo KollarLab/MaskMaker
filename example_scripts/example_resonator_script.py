@@ -72,4 +72,4 @@ for i in range(len(cstraight)):
 
 saveDir = r'Z:\Users\Theo\CAD'
 filename = 'example_resonator_chip.dxf'
-chip.drawing.saveas(os.path.join(saveDir,filename))
+chip.saveas(os.path.join(saveDir,filename))

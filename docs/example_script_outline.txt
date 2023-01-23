@@ -48,4 +48,4 @@ CPWStraight(chip,startjunc=startjunc3,settings = {'length':300})
 ...
 
 ### save drawing to dxf
-chip.drawing.saveas(os.path.join(saveDir,filename))
+chip.saveas(os.path.join(saveDir,filename))

@@ -100,6 +100,6 @@ startjunc = startjunction(15)
 lobedring1 = LobedRing(chip,startjunc=startjunc)
 
 #save
-saveDir = r'C:\Users\Theo\Documents\Kollar Lab Files\CAD'
+saveDir = r'Z:\Users\Theo\CAD'
 filename = 'MM_settings_test.dxf'
-chip.drawing.saveas(os.path.join(saveDir,filename))
+chip.saveas(os.path.join(saveDir,filename))

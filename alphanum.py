@@ -1,4 +1,3 @@
-import sdxf 
 from pt_operations import scale_pts, orient_pts, orient_pt
 
 alphanum_dict = {
@@ -51,7 +50,7 @@ class AlphaNum:
         for pts in alphanum_dict[letter.lower()]:
             mpts = scale_pts(pts,scaled_size)
             mpts = orient_pts(mpts,direction,point)
-            drawing.append(sdxf.PolyLine(mpts))
+            drawing.add_lwpolyline(mpts)
 
 class AlphaNumText:
     """

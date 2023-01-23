@@ -57,9 +57,9 @@ class CPWStraight(Component):
         
         s.last = stopjunc.copyjunc()
         
-        s.drawing.append(sdxf.PolyLine(gap1))
-        s.drawing.append(sdxf.PolyLine(gap2))
-    
+        s.drawing.add_lwpolyline(gap1)
+        s.drawing.add_lwpolyline(gap2)
+
         startjunc = startjunc.reverse()
                 
         self.cxns = {cxns_names[0]:startjunc, cxns_names[1]:stopjunc}

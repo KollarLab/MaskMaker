@@ -7,7 +7,6 @@ Created on Mon Jul 25 17:53:20 2022
 
 import numpy as np
 from component import Component
-import sdxf
 from pt_operations import rotate_pt, rotate_pts, translate_pts, orient_pts, mirror_pts
 from junction import junction
 from component import Component
@@ -59,7 +58,7 @@ class QubitNotchFromJunc(Component):
         Component.__init__(self,structure,comp_key,global_keys,object_keys,settings)        
         
         if self.refjunc is None:
-            print("please provide junction for notch")
+            print("please provide refjunc for notch")
             return
         
         coords = self.refjunc.coords
@@ -80,7 +79,7 @@ class QubitNotchFromJunc(Component):
             if self.leftright == 'left':
                 pts = mirror_pts(pts,direction,coords)
             
-            s.drawing.append(sdxf.PolyLine(pts))
+            s.drawing.add_lwpolyline(pts)
         else:
             valid_notch_types = ['trapezoid']
             print('Invalid notch_type for QubitNotchFromJunc at {}. Supported notch_types are {}'.format(coords,valid_notch_types))

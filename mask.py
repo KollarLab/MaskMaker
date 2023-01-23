@@ -15,7 +15,7 @@ New features:
     ability to store connection points of various components
 ###############################################################################
 """
-import sdxf
+import ezdxf
 from junction import junction
 # from pt_operations import translate_pts
 
@@ -51,10 +51,13 @@ class Chip:
         self.size = size
         self.defaults = {}
         
-        self.drawing = sdxf.Drawing()
+        self.doc = ezdxf.new("R2010")
+        self.drawing = self.doc.modelspace()
+        
+        self.block_i = 0 # used in ImportedDXF
         
     def saveas(self,file):
-        self.drawing.saveas(file)
+        self.doc.saveas(file)
 
 class ChipBorder:
     """Chip border for dicing"""
@@ -62,6 +65,5 @@ class ChipBorder:
         
         s=structure
         
-        pts = [(0,0),(0,s.size),(s.size,s.size),(s.size,0),(0,0)]
-
-        s.drawing.append(sdxf.PolyLine(pts))
+        pts = [(0,0),(0,s.size),(s.size,s.size),(s.size,0),(0,0)]  
+        s.drawing.add_lwpolyline(pts)

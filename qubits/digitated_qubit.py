@@ -7,7 +7,6 @@ Created on Tue Aug  2 15:38:45 2022
 
 import numpy as np
 from component import Component
-import sdxf
 from pt_operations import rotate_pt, rotate_pts, translate_pts, arc_pts, orient_pts, mirror_pts, translate_pt, orient_pt
 from junction import junction
 from component import Component
@@ -87,6 +86,10 @@ class DigitatedQubit(Component):
         global_keys = ['pinw','gapw','pin_gap']
         object_keys = ['pinw','gapw','gapw'], # which correspond to the extract global_keys
         Component.__init__(self,structure,comp_key,global_keys,object_keys,settings)
+        
+        if self.refjunc is None:
+            print("please provide refjunc for qubit")
+            return
         
         coords = self.refjunc.coords
         direction = self.refjunc.direction + 180
@@ -185,8 +188,8 @@ class DigitatedQubit(Component):
             paddle1 = mirror_pts(paddle1,direction,coords)
             paddle2 = mirror_pts(paddle2,direction,coords)
         
-        s.drawing.append(sdxf.PolyLine(paddle1))
-        s.drawing.append(sdxf.PolyLine(paddle2))
+        s.drawing.add_lwpolyline(paddle1)
+        s.drawing.add_lwpolyline(paddle2)
         
         QubitNotchFromJunc(s,settings = {'pinw': self.pinw,
                                           'gapw': self.gapw,
