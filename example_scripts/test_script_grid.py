@@ -21,6 +21,7 @@ from couplers.tapered_cap import TaperedCap
 from couplers.three_way_coupler import ThreeWayCoupler
 
 from cpw.CPWBend import CPWBend
+from cpw.CPWBendTaper import CPWBendTaper
 from cpw.CPWStraight import CPWStraight
 
 from resonators.lobed_ring import LobedRing
@@ -95,6 +96,15 @@ addStraights(chip,cstraight5)
 startjunc = startjunction(10)
 cstraight6 = CouplingStraight(chip,startjunc=startjunc,settings={'coupling_gap':5*gapw_Z0,'updown':'down','leftright':'left'})
 addStraights(chip,cstraight6)
+
+angle = 60
+radius = 300
+startjunc = startjunction(11)
+taperbend1 = CPWBendTaper(chip,startjunc=startjunc,settings={'turn_angle':angle,'radius':radius,'stop_pinw':2*pinw_Z0,'stop_gapw':2*gapw_Z0})
+CPWBend(chip,settings={'turn_angle':180-2*angle,'radius':radius,'pinw':2*pinw_Z0,'gapw':2*gapw_Z0})
+taperbend2 = CPWBendTaper(chip,settings={'turn_angle':angle,'radius':radius,'start_pinw':2*pinw_Z0,'start_gapw':2*gapw_Z0})
+CPWStraight(chip,settings = {'length':400}, startjunc = taperbend1.cxns['in'])
+CPWStraight(chip,settings = {'length':400}, startjunc = taperbend2.cxns['out'])
 
 startjunc = startjunction(15)
 lobedring1 = LobedRing(chip,startjunc=startjunc)

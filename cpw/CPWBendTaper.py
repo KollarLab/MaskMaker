@@ -4,7 +4,7 @@ from junction import junction
 from component import Component
 import numpy as np
 
-class CPWBend(Component):
+class CPWBendTaper(Component):
     """
     creates a CPW bend with pinw/gapw/radius
             
@@ -16,8 +16,10 @@ class CPWBend(Component):
     
     _defaults = {}
     _defaults['turn_angle'] = 90
-    _defaults['pinw'] = 20
-    _defaults['gapw'] = 8.372
+    _defaults['start_pinw'] = 20
+    _defaults['stop_pinw'] = 20
+    _defaults['start_gapw'] = 8.372
+    _defaults['stop_gapw'] = 8.372
     _defaults['radius'] = 100
     _defaults['polyarc'] = True
     _defaults['segments'] = 180
@@ -29,8 +31,8 @@ class CPWBend(Component):
 #        print('radius',radius)
 
         comp_key = 'CPWBend'
-        global_keys = ['pinw','gapw','radius']
-        object_keys = ['pinw','gapw','radius'] # which correspond to the extract global_keys
+        global_keys = ['pinw','pinw','gapw','gapw','radius']
+        object_keys = ['start_pinw','stop_pinw','start_gapw','stop_gapw','radius'] # which correspond to the extract global_keys
         Component.__init__(self,structure,comp_key,global_keys,object_keys,settings)
         settings = self.settings
         
@@ -115,13 +117,25 @@ class CPWBend(Component):
     
         #lower gap
         num_segments = np.abs(np.round(self.segments*self.turn_angle/360)).astype(int) #based on what proportion of 360 the subtended angle is
-
-        pts1=arc_pts(self.astart_angle,self.astop_angle,self.radius+self.pinw/2.+self.gapw,num_segments)
-        pts1.extend(arc_pts(self.astop_angle,self.astart_angle,self.radius+self.pinw/2.,num_segments))
+        
+        def taper_arc_pts(start_angle,stop_angle,r1,r2,segments=360):
+            pts=[]
+            for ii in range(segments):
+                try:
+                    theta=(start_angle+ii/(segments-1.)*(stop_angle-start_angle))*np.pi/180.
+                except:
+                    print(stop_angle-start_angle)
+                r = r1 + (r2-r1)*((theta*180/np.pi)-start_angle)/(stop_angle-start_angle)
+                p=(r*np.cos(theta),r*np.sin(theta))
+                pts.append(p)
+            return pts
+        
+        pts1=taper_arc_pts(self.astart_angle,self.astop_angle,self.radius+self.start_pinw/2.+self.start_gapw,self.radius+self.stop_pinw/2.+self.stop_gapw,num_segments)
+        pts1.extend(taper_arc_pts(self.astop_angle,self.astart_angle,self.radius+self.stop_pinw/2.,self.radius+self.start_pinw/2.,num_segments))
         pts1.append(pts1[0])
        
-        pts2=arc_pts(self.astart_angle,self.astop_angle,self.radius-self.pinw/2.,num_segments)
-        pts2.extend(arc_pts(self.astop_angle,self.astart_angle,self.radius-self.pinw/2.-self.gapw,num_segments))
+        pts2=taper_arc_pts(self.astart_angle,self.astop_angle,self.radius-self.start_pinw/2.,self.radius-self.stop_pinw/2.,num_segments)
+        pts2.extend(taper_arc_pts(self.astop_angle,self.astart_angle,self.radius-self.stop_pinw/2.-self.stop_gapw,self.radius-self.start_pinw/2.-self.start_gapw,num_segments))
         pts2.append(pts2[0])
       
         self.structure.drawing.add_lwpolyline(translate_pts(pts1,self.center))
