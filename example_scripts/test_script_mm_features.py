@@ -7,12 +7,13 @@ Created on Tue Jun 28 13:49:17 2022
 import os
 
 # replace with MaskMaker filepath
-os.chdir(r'Z:\MaskMaker') # is this the right way to do this
+# os.chdir(r"C:\Users\KollarLab\Documents\GitHub\MaskMaker")
 
 from mask import Chip, ChipBorder
 
 from bondpad import Bondpad
-from junction import junction
+from junction import Junction
+from component import Component
 from couplers.coupling_tee import CouplingStraight
 from couplers.finger_cap import FingerCap
 from couplers.gap_cap import GapCap
@@ -31,20 +32,22 @@ defaults['pinw'] = pinw_Z0
 defaults['gapw'] = gapw_Z0
 defaults['radius'] = 100
 
-defaults['FingerCap']['finger_length'] = 200
+defaults['finger_length'] = 200
+# This line was previously defaults['FingerCap']['finger_length'] but that was causing errors so i took it out, might have been wrong
+
 
 chip = Chip(7000)
 chip.defaults = defaults
 
 ChipBorder(chip)
 
-startjunc1 = junction((1000,1000),0)
+startjunc1 = Junction((1000,1000),0)
 
 bondpad1 = Bondpad(chip, startjunc = startjunc1)
 gapcap1 = GapCap(chip)
 bondpad2 = Bondpad(chip, settings = {'bond_pad_length':700})
 
-startjunc2 = junction((1000,2000),0)
+startjunc2 = Junction((1000,2000),0)
 
 bondpad3 = Bondpad(chip,startjunc=startjunc2)
 tcap1 = TaperedCap(chip)
@@ -68,6 +71,6 @@ fingercap1 = FingerCap(chip)
 CPWStraight(chip,settings={'length':300})
 
 #save
-# saveDir = r'Z:\Users\Theo\CAD'
+saveDir = r'Z:\Users\Theo\CAD'
 filename = 'mmv1_test.dxf'
 chip.saveas(os.path.join(saveDir,filename))

@@ -9,12 +9,12 @@ import os
 import numpy as np
 
 # replace with MaskMaker filepath
-os.chdir(r'Z:\MaskMaker') # is this the right way to do this
+# os.chdir(r"C:\Users\KollarLab\Documents\GitHub\MaskMaker")
 
 from mask import Chip, ChipBorder
 
 from bondpad import Bondpad
-from junction import junction
+from junction import Junction
 from couplers.coupling_tee import CouplingStraight
 from cpw.CPWBend import CPWBend
 from cpw.CPWStraight import CPWStraight
@@ -35,7 +35,7 @@ chip.defaults = defaults
 ChipBorder(chip)
 
 # feedline could be optimized into another Component, with cxns at each hanger
-feedline_start = junction((1200,1800),90)
+feedline_start = Junction((1200,1800),90)
 coupling_straight_length = CouplingStraight._defaults['length']
 feedline_height = 4100
 feedline_width = 4560

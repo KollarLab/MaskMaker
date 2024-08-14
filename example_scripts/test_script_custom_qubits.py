@@ -8,14 +8,14 @@ import os
 
 from qubits.custom_qubit import CustomQubit
 from cpw.CPWStraight import CPWStraight
-from junction import junction
+from junction import Junction
 from mask import Chip
 from import_dxf import ImportedDXF
 
 chip = Chip(7000)
 
 
-straight1 = CPWStraight(chip,settings={'length':2000},startjunc=junction((0,-500),0))
+straight1 = CPWStraight(chip,settings={'length':2000},startjunc=Junction((0,-500),0))
 
 martin_path = r'Z:\Users\Theo\CAD\martins_stolen_qubit.dxf'
 round_path = r'Z:\Users\Theo\CAD\rounded_qubit.dxf'

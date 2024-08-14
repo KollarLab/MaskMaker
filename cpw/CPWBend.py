@@ -1,6 +1,6 @@
 import sdxf
 from pt_operations import rotate_pt, rotate_pts, translate_pts, arc_pts
-from junction import junction
+from junction import Junction
 from component import Component
 import numpy as np
 
@@ -62,9 +62,9 @@ class CPWBend(Component):
         else:       self.arc_bend()
 
         self.stop=rotate_pt(self.start,self.stop_angle-self.start_angle,self.center)
-        self.structure.last = junction(self.stop,self.stop_angle)
+        self.structure.last = Junction(self.stop,self.stop_angle)
         
-        self.cxns = {cxns_names[0]:junction(self.start,self.start_angle+180),cxns_names[1]:junction(self.stop,self.stop_angle)}
+        self.cxns = {cxns_names[0]:Junction(self.start,self.start_angle+180),cxns_names[1]:Junction(self.stop,self.stop_angle)}
 
     def arc_bend(self):
         print("polyarc = False no longer supported!")

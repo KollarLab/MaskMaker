@@ -1,6 +1,6 @@
 import sdxf
 from pt_operations import rotate_pts, rotate_pt
-from junction import junction
+from junction import Junction
 from component import Component
 
 class CPWStraight(Component):
@@ -53,7 +53,7 @@ class CPWStraight(Component):
         gap2=rotate_pts(gap2,startjunc.direction,coords)
         
         stop_coords=rotate_pt((coords[0]+length,coords[1]),startjunc.direction,coords)
-        stopjunc=junction(stop_coords,startjunc.direction)
+        stopjunc=Junction(stop_coords,startjunc.direction)
         
         s.last = stopjunc.copyjunc()
         

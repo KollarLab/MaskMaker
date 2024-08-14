@@ -20,7 +20,7 @@ toc_object_entries_show_parents = 'hide'
 add_module_names = False
 templates_path = ['_templates']
 exclude_patterns = []
-autodoc_mock_imports = []
+autodoc_mock_imports = ['ezdxf']
 suppress_warnings = ['docutils']
 autosummary_generate = True
 
@@ -37,7 +37,7 @@ html_theme_options = {
     "primary_sidebar_end": ["indices.html"],
     "secondary_sidebar_items": ["page-toc", "edit-this-page", "sourcelink"],
     "navbar_align": "right",
-    "navigation_depth": 1,
+    "navigation_depth": 2,
     "icon_links":[
         {
             "name": "Github",

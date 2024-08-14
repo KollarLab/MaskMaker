@@ -1,6 +1,6 @@
 import numpy as np
 
-class junction():
+class Junction():
     """
     junction is an object that just contains tuple coordinates and a direction
     the idea is that at some point, the user can draw CPWs using functions like
@@ -40,10 +40,10 @@ class junction():
     def __str__(self):
         return f'junction at {self.coords} facing {self.direction} degrees'
     def copyjunc(self):
-        return junction(self.coords,self.direction)
+        return Junction(self.coords,self.direction)
     def add(self,coords,direction):
         net_direction = (self.direction + direction) % 360
-        return junction((self.coords[0]+coords[0],self.coords[1]+coords[1]),net_direction)
+        return Junction((self.coords[0]+coords[0],self.coords[1]+coords[1]),net_direction)
     def reverse(self):
         net_direction = (self.direction + 180) % 360
-        return junction(self.coords,net_direction)
+        return Junction(self.coords,net_direction)

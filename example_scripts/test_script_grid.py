@@ -13,7 +13,7 @@ import numpy as np
 from mask import Chip, ChipBorder
 
 from bondpad import Bondpad
-from junction import junction
+from junction import Junction
 from couplers.coupling_tee import CouplingStraight
 from couplers.finger_cap import FingerCap
 from couplers.gap_cap import GapCap
@@ -36,7 +36,7 @@ def startjunction(n):
     i_x = n % N
     i_y = np.floor(n/N).astype(int)
     # print([i_x,i_y])
-    return junction((buffer+i_x*spacing,buffer+i_y*spacing),90)
+    return Junction((buffer+i_x*spacing,buffer+i_y*spacing),90)
 
 def addStraights(structure,component):
     for key in component.cxns:

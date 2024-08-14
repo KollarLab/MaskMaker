@@ -16,7 +16,7 @@ New features:
 ###############################################################################
 """
 import ezdxf
-from junction import junction
+from junction import Junction
 # from pt_operations import translate_pts
 
 class MaskError:
@@ -46,7 +46,7 @@ attributes:
     saveas(file): more convenient call to save drawing as dxf
 """
 class Chip:
-    def __init__(self, size, start=junction((0,0),0)):
+    def __init__(self, size, start=Junction((0,0),0)):
         self.last = start
         self.size = size
         self.defaults = {}

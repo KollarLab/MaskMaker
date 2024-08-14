@@ -8,7 +8,7 @@ Created on Tue Aug  2 15:38:45 2022
 import numpy as np
 from component import Component
 from pt_operations import rotate_pt, rotate_pts, translate_pts, arc_pts, orient_pts, mirror_pts, translate_pt, orient_pt
-from junction import junction
+from junction import Junction
 from component import Component
 
 from qubits.notch import QubitNotchFromJunc
