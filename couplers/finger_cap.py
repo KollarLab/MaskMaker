@@ -2,7 +2,7 @@ from component import Component
 from cpw.CPWLinearTaper import CPWLinearTaper
 from pt_operations import rotate_pts, translate_pts, rotate_pt
 from mask import MaskError
-from junction import junction
+from junction import Junction
 
 class FingerCap(Component):
     """
@@ -92,7 +92,7 @@ class FingerCap(Component):
         gap1=rotate_pts(gap1,s.last.direction,start)
         gap2=rotate_pts(gap2,s.last.direction,start)
         stop=rotate_pt((start[0]+length,start[1]),s.last.direction,start)
-        s.last=junction(stop, s.last.direction)
+        s.last=Junction(stop, s.last.direction)
 
         s.drawing.add_lwpolyline(gap1)
         s.drawing.add_lwpolyline(gap2)

@@ -1,6 +1,6 @@
 from pt_operations import rotate_pt, rotate_pts
 import sdxf
-from junction import junction
+from junction import Junction
 from component import Component
 
 class CPWLinearTaper(Component):
@@ -57,7 +57,7 @@ class CPWLinearTaper(Component):
         
         #update last anchor position
         stop_coords=rotate_pt((coords[0]+self.length,coords[1]),startjunc.direction,coords)
-        stopjunc = junction(stop_coords,startjunc.direction)
+        stopjunc = Junction(stop_coords,startjunc.direction)
         s.last=stopjunc.copyjunc()
         
         startjunc.direction = startjunc.direction - 180
